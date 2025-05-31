@@ -1,0 +1,48 @@
+{% include 'layout/header_dashboard.html' %}
+
+<body class="bg-body-primary">
+    {% include 'layout/nav.html' %}
+    
+    <div class="container-fluid bg-body-secondary">
+       
+        <div class="card">
+            <!-- Tabla de datos -->
+            {% include 'layout/modalAgregar.html' %}
+            {% include 'layout/modalEditar.html' %}
+            <details class="mb-4">
+                <summary class="h5 text-primary"><i class="fas fa-table me-2"></i>Ver tabla de datos</summary>
+                <div class="mt-3 table-responsive">
+                    <table id="tablaJuegos" class="table table-striped" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Título</th>
+                                <th>Plataforma</th>
+                                <th>Año</th>
+                                <th>Género</th>
+                                <th>Editor</th>
+                                <th>Ventas NA</th>
+                                <th>Ventas EU</th>
+                                <th>Ventas JP</th>
+                                <th>Ventas Otros</th>
+                                <th>Ventas Globales</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </details>
+        </div>
+        {% include 'layout/scripts.html' %}
+        <script src="{{ url_for('static', filename='js/crudgames.js') }}?v=3.0.0"></script>
+
+    </div>
+
+{% include 'layout/mensajes.html' %}
+
+
+</body>
+{% include 'layout/footer_dashboard.html' %}
+
+</html>
