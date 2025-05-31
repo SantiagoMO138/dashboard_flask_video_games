@@ -34,6 +34,7 @@ class Usuario(Base, UserMixin):
     id = Column(Integer, primary_key=True)
     username = Column(String(100), unique=True, nullable=False)
     password = Column(String(255), nullable=False)
+    role = Column(String(50), nullable=False, default='user')
 
     def set_password(self, password):
         self.password = generate_password_hash(password)
