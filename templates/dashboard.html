@@ -2,8 +2,36 @@
 
 <body class="bg-body-primary">
     {% include 'layout/nav.html' %}
-    <div class="container-fluid bg-body-secondary" >
+    <div class="container-fluid bg-body-secondary">
         <div class="card">
+            <!-- Flash messages -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+            <div class="row mb-4">
+                <div class="col-12">
+                    {% for category, message in messages %}
+                    <div class="alert alert-{{ category }} alert-dismissible fade show text-black text-sm" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">X</button>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+            {% endwith %}
+
+            <!-- Botón para administradores -->
+            {% if is_admin %}
+            <div class="row mb-4">
+                <div class="col-12 text-end">
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                        data-bs-target="#registerModal">
+                        <i class="fas fa-user-plus me-2"></i>Registrar Nuevo Usuario
+                    </button>
+                </div>
+            </div>
+            {% endif %}
+
             <!-- Stats Cards -->
             <div class="row mb-4">
                 <div class="col-md-3">
@@ -102,19 +130,26 @@
             <div class="card">
                 <ul class="nav nav-tabs" id="chartTabs" role="tablist">
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="plataforma-region-tab" data-bs-toggle="tab" data-bs-target="#plataforma-region" type="button" role="tab">Plataforma y Región</button>
+                        <button class="nav-link active" id="plataforma-region-tab" data-bs-toggle="tab"
+                            data-bs-target="#plataforma-region" type="button" role="tab">Plataforma y Región</button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="genero-generoAnio-tab" data-bs-toggle="tab" data-bs-target="#genero-generoAnio" type="button" role="tab">Género y Género por Año</button>
+                        <button class="nav-link" id="genero-generoAnio-tab" data-bs-toggle="tab"
+                            data-bs-target="#genero-generoAnio" type="button" role="tab">Género y Género por
+                            Año</button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="anio-radar-tab" data-bs-toggle="tab" data-bs-target="#anio-radar" type="button" role="tab">Año y Radar</button>
+                        <button class="nav-link" id="anio-radar-tab" data-bs-toggle="tab" data-bs-target="#anio-radar"
+                            type="button" role="tab">Año y Radar</button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="editor-titulos-tab" data-bs-toggle="tab" data-bs-target="#editor-titulos" type="button" role="tab">Editor y Títulos</button>
+                        <button class="nav-link" id="editor-titulos-tab" data-bs-toggle="tab"
+                            data-bs-target="#editor-titulos" type="button" role="tab">Editor y Títulos</button>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="titulosAnio-editorRegion-tab" data-bs-toggle="tab" data-bs-target="#titulosAnio-editorRegion" type="button" role="tab">Títulos por Año y Editor por Región</button>
+                        <button class="nav-link" id="titulosAnio-editorRegion-tab" data-bs-toggle="tab"
+                            data-bs-target="#titulosAnio-editorRegion" type="button" role="tab">Títulos por Año y Editor
+                            por Región</button>
                     </li>
                 </ul>
                 <div class="tab-content" id="chartTabContent">
@@ -145,9 +180,12 @@
                         <div class="row mb-3">
                             <div class="col">
                                 <div class="btn-group">
-                                    <button class="btn btn-outline-primary period-btn active" data-period="all">Todos</button>
-                                    <button class="btn btn-outline-primary period-btn" data-period="last5">Últimos 5 Años</button>
-                                    <button class="btn btn-outline-primary period-btn" data-period="last">Último Año</button>
+                                    <button class="btn btn-outline-primary period-btn active"
+                                        data-period="all">Todos</button>
+                                    <button class="btn btn-outline-primary period-btn" data-period="last5">Últimos 5
+                                        Años</button>
+                                    <button class="btn btn-outline-primary period-btn" data-period="last">Último
+                                        Año</button>
                                 </div>
                             </div>
                         </div>
@@ -184,11 +222,52 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Modal de Registro -->
+            {% if is_admin %}
+            <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="registerModalLabel">Registrar Nuevo Usuario</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form method="POST" action="{{ url_for('dashboard') }}">
+                                <input type="hidden" name="action" value="register">
+                                <div class="input-group input-group-outline my-3">
+                                    <label class="form-label">Usuario</label>
+                                    <input type="text" class="form-control" name="username" placeholder="Usuario"
+                                        required>
+                                </div>
+                                <div class="input-group input-group-outline my-3">
+                                    <label class="form-label">Contraseña</label>
+                                    <input type="password" class="form-control" name="password" placeholder="Contraseña"
+                                        required>
+                                </div>
+                                <div class="input-group input-group-outline my-3">
+                                    <label for="role" class="form-label">Rol</label>
+                                    <select class="form-select" name="role" id="role" required>
+                                        <option value="user">Usuario</option>
+                                        <option value="admin">Administrador</option>
+                                    </select>
+                                </div>
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-success w-100">Registrarse</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
         </div>
         <!-- Scripts -->
-         {% include 'layout/scripts.html' %}
-         <script src="{{ url_for('static', filename='js/dashboard.js') }}?v=3.0.0"></script>
+        {% include 'layout/scripts.html' %}
+        <script src="{{ url_for('static', filename='js/dashboard.js') }}?v=3.0.0"></script>
     </div>
 </body>
 {% include 'layout/footer_dashboard.html' %}
+
 </html>
