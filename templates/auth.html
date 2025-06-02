@@ -1,24 +1,25 @@
-
 {% extends 'layout/base.html' %}
 
 {% block title %}Login / Registro{% endblock %}
 
 {% block content %}
 <main class="main-content mt-0">
-  <div class="page-header align-items-start min-vh-100" style="background-image: url('https://www.ncsc.gov.uk/images/library/iStock-1334436084.jpg');">
+  <div class="page-header align-items-start min-vh-100"
+    style="background-image: url('https://www.ncsc.gov.uk/images/library/iStock-1334436084.jpg');">
     <span class="mask bg-gradient-dark opacity-6"></span>
     <div class="container my-auto">
       <div class="row">
         <div class="col-lg-4 col-md-7 mx-auto">
           <div class="card z-index-0 fadeIn3 fadeInBottom">
             <div class="card-header text-center pt-4">
-              <h5>Iniciar sesión / {% if is_admin %}Registrarse{% endif %}</h5>
+              <h5>Iniciar sesión</h5>
             </div>
             <div class="card-body">
               <!-- Tabs -->
               <ul class="nav nav-tabs nav-fill mb-3" id="authTab" role="tablist">
                 <li class="nav-item">
-                  <a class="nav-link active" id="login-tab" data-bs-toggle="tab" href="#login" role="tab">Iniciar sesión</a>
+                  <a class="nav-link active" id="login-tab" data-bs-toggle="tab" href="#login" role="tab">Iniciar
+                    sesión</a>
                 </li>
                 {% if is_admin %}
                 <li class="nav-item">
@@ -30,12 +31,13 @@
               <!-- Flash messages -->
               {% with messages = get_flashed_messages(with_categories=true) %}
               {% if messages %}
-                {% for category, message in messages %}
-                  <div class="alert alert-{{ category }} alert-dismissible fade show text-black text-sm" role="alert">
-                    {{ message }}
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close">X</button>
-                  </div>
-                {% endfor %}
+              {% for category, message in messages %}
+              <div class="alert alert-{{ category }} alert-dismissible fade show text-black text-sm" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert"
+                  aria-label="Close">X</button>
+              </div>
+              {% endfor %}
               {% endif %}
               {% endwith %}
 
@@ -91,19 +93,19 @@
   </div>
 </main>
 <script>
-document.addEventListener("DOMContentLoaded", function () {
+  document.addEventListener("DOMContentLoaded", function () {
     const forms = document.querySelectorAll('form[action="{{ url_for("auth") }}"]');
     forms.forEach(function (form) {
-        form.addEventListener("submit", function (event) {
-            const action = form.querySelector("input[name='action']").value;
-            if (action === "login") {
-                // Prevent default form submission
-                event.preventDefault();
-                
-                // Create loader
-                const loader = document.createElement('div');
-                loader.id = "loader";
-                loader.style.cssText = `
+      form.addEventListener("submit", function (event) {
+        const action = form.querySelector("input[name='action']").value;
+        if (action === "login") {
+          // Prevent default form submission
+          event.preventDefault();
+
+          // Create loader
+          const loader = document.createElement('div');
+          loader.id = "loader";
+          loader.style.cssText = `
                     position: fixed;
                     top: 0;
                     left: 0;
@@ -115,7 +117,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     align-items: center;
                     z-index: 9999;
                 `;
-                loader.innerHTML = `
+          loader.innerHTML = `
                     <div class="pacman-loader">
                         <div class="pacman"></div>
                         <div class="dots">
@@ -127,35 +129,35 @@ document.addEventListener("DOMContentLoaded", function () {
                         </div>
                     </div>
                 `;
-                document.body.appendChild(loader);
+          document.body.appendChild(loader);
 
-                // Delay form submission to allow animation to complete
-                setTimeout(() => {
-                    form.submit(); // Programmatically submit the form
-                }, 2000); // Match the 4-second animation duration
-            }
-        });
+          // Delay form submission to allow animation to complete
+          setTimeout(() => {
+            form.submit(); // Programmatically submit the form
+          }, 2000); // Match the 4-second animation duration
+        }
+      });
     });
-});
+  });
 </script>
 
 <style>
-.pacman-loader {
+  .pacman-loader {
     position: relative;
     display: flex;
     align-items: center;
-}
+  }
 
-.pacman {
+  .pacman {
     width: 50px;
     height: 50px;
     background: #ffeb3b;
     border-radius: 50%;
     position: relative;
     animation: move 2s linear infinite, chomp 0.5s ease-in-out infinite;
-}
+  }
 
-.pacman::before {
+  .pacman::before {
     content: '';
     position: absolute;
     width: 0;
@@ -165,47 +167,85 @@ document.addEventListener("DOMContentLoaded", function () {
     border-left: 0;
     left: 0;
     animation: chomp-mouth 0.5s ease-in-out infinite;
-}
+  }
 
-.dots {
+  .dots {
     display: flex;
     margin-left: 20px;
-}
+  }
 
-.dot {
+  .dot {
     width: 10px;
     height: 10px;
     background: #fff;
     border-radius: 50%;
     margin: 0 10px;
     animation: disappear 4s linear infinite;
-}
+  }
 
-.dot:nth-child(2) { animation-delay: 0.8s; }
-.dot:nth-child(3) { animation-delay: 1.6s; }
-.dot:nth-child(4) { animation-delay: 2.4s; }
-.dot:nth-child(5) { animation-delay: 3.2s; }
+  .dot:nth-child(2) {
+    animation-delay: 0.8s;
+  }
 
-@keyframes move {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(200px); }
-}
+  .dot:nth-child(3) {
+    animation-delay: 1.6s;
+  }
 
-@keyframes chomp {
-    0%, 100% { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
-    50% { clip-path: polygon(0 25%, 100% 25%, 100% 75%, 0 75%); }
-}
+  .dot:nth-child(4) {
+    animation-delay: 2.4s;
+  }
 
-@keyframes chomp-mouth {
-    0%, 100% { border-right-color: #1e1e2f; }
-    50% { border-right-color: transparent; }
-}
+  .dot:nth-child(5) {
+    animation-delay: 3.2s;
+  }
 
-@keyframes disappear {
-    0% { opacity: 1; }
-    50% { opacity: 0; }
-    100% { opacity: 0; }
-}
+  @keyframes move {
+    0% {
+      transform: translateX(0);
+    }
+
+    100% {
+      transform: translateX(200px);
+    }
+  }
+
+  @keyframes chomp {
+
+    0%,
+    100% {
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    }
+
+    50% {
+      clip-path: polygon(0 25%, 100% 25%, 100% 75%, 0 75%);
+    }
+  }
+
+  @keyframes chomp-mouth {
+
+    0%,
+    100% {
+      border-right-color: #1e1e2f;
+    }
+
+    50% {
+      border-right-color: transparent;
+    }
+  }
+
+  @keyframes disappear {
+    0% {
+      opacity: 1;
+    }
+
+    50% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 0;
+    }
+  }
 </style>
 {% endblock %}
 ```
