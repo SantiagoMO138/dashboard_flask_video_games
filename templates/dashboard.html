@@ -225,42 +225,99 @@
 
             <!-- Modal de Registro -->
             {% if is_admin %}
-            <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="registerModalLabel">Registrar Nuevo Usuario</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form method="POST" action="{{ url_for('dashboard') }}">
-                                <input type="hidden" name="action" value="register">
-                                <div class="input-group input-group-outline my-3">
-                                    <label class="form-label">Usuario</label>
-                                    <input type="text" class="form-control" name="username" placeholder="Usuario"
-                                        required>
-                                </div>
-                                <div class="input-group input-group-outline my-3">
-                                    <label class="form-label">Contraseña</label>
-                                    <input type="password" class="form-control" name="password" placeholder="Contraseña"
-                                        required>
-                                </div>
-                                <div class="input-group input-group-outline my-3">
-                                    <label for="role" class="form-label">Rol</label>
-                                    <select class="form-select" name="role" id="role" required>
-                                        <option value="user">Usuario</option>
-                                        <option value="admin">Administrador</option>
-                                    </select>
-                                </div>
-                                <div class="text-center">
-                                    <button type="submit" class="btn btn-success w-100">Registrarse</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
+            <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="registerModalLabel">Registrar Nuevo Usuario</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+            <div class="modal-body">
+                <form method="POST" action="{{ url_for('dashboard') }}">
+                    <input type="hidden" name="action" value="register">
+                    <div class="input-group input-group-outline my-4">
+                        <label class="form-label"></label>
+                        <input type="text" class="form-control" name="username" placeholder="Usuario" required>
+                    </div>
+                    <div class="input-group input-group-outline my-4">
+                        <label class="form-label"></label>
+                        <input type="password" class="form-control" name="password" placeholder="Contraseña" required>
+                    </div>
+                    <div class="input-group input-group-outline my-4">
+                        <label for="role" class="form-label"></label>
+                        <select class="form-select" name="role" id="role" required>
+                            <option value="user">Usuario</option>
+                            <option value="admin">Administrador</option>
+                        </select>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-success w-100">Registrarse</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+/* Ensure input-group-outline has proper spacing and prevents overlap */
+.input-group-outline {
+    position: relative;
+    margin-bottom: 1.5rem; /* Increased margin for better spacing */
+}
+
+/* Style for labels to prevent overlap with inputs */
+.input-group-outline .form-label {
+    position: absolute;
+    top: -0.5rem; /* Move label above input to avoid overlap */
+    left: 1rem;
+    font-size: 0.9rem;
+    color: #666;
+    transition: all 0.2s ease;
+    background: #fff; /* White background to cover input border */
+    padding: 0 0.25rem;
+    pointer-events: none;
+}
+
+/* Adjust label when input is focused or filled */
+.input-group-outline input:focus + .form-label,
+.input-group-outline input:not(:placeholder-shown) + .form-label {
+    top: -1.2rem;
+    font-size: 0.75rem;
+    color: #333;
+}
+
+/* Ensure select element aligns with input styling */
+.input-group-outline .form-select {
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    border-radius: 0.375rem;
+    border: 1px solid #ced4da;
+    width: 100%;
+}
+
+/* Adjust input padding for consistency */
+.input-group-outline .form-control {
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    border-radius: 0.375rem;
+}
+
+/* Ensure modal content has enough padding */
+.modal-body {
+    padding: 2rem; /* Increased padding for a less cramped look */
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+    .modal-body {
+        padding: 1.5rem;
+    }
+    .input-group-outline .form-label {
+        font-size: 0.8rem;
+    }
+}
+</style>
             {% endif %}
         </div>
         <!-- Scripts -->
